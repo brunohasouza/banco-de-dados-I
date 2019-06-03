@@ -1,0 +1,230 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vitrine Literária</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Vitrine Literária</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Usuário <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="livro.html">Livro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="anuncio.html">Anúncio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comprar.html">Compra</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Adicionar Usuário
+                        </div>
+                        <form action="" id="formUsuario">
+                            <div class="card-body paddingBottom">
+                                <div class="row">
+                                    <div class="col-12" id="mensagem">
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nome</span>
+                                            </div>
+                                            <input name="usuarioNome" required type="text" class="form-control" placeholder="João da Silva">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">E-mail</span>
+                                            </div>
+                                            <input name="usuarioEmail" required type="email" class="form-control" placeholder="usuario@exemplo.com">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">D. Nascimento</span>
+                                            </div>
+                                            <input name="usuarioNascimento" required type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Estado</span>
+                                            </div>
+                                            <input name="usuarioEstado" required type="text" class="form-control" placeholder="Pernambuco">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Cidade</span>
+                                            </div>
+                                            <input name="usuarioCidade" required type="text" class="form-control" placeholder="Recife">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Estado</span>
+                                            </div>
+                                            <input name="usuarioEndereco" required type="text" class="form-control" placeholder="Av. Domingos Ferreira">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Senha</span>
+                                            </div>
+                                            <input name="usuarioSenha" required type="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Repetir Senha</span>
+                                            </div>
+                                            <input name="usuarioRepetirSenha" required type="password" class="form-control" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button class="btn btn-info" type="submit">Adicionar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Lista de usuários
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Senha</th>
+                                        <th scope="col">Endereço</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Cidade</th>
+                                        <th scope="col">Data de Nascimento</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaUsuario">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./lib/jquery.mask.min.js"></script>
+    <script src="./js/script.js"></script>
+
+    <script>
+        const form = document.querySelector('#formUsuario')
+        const alert = document.querySelector('#mensagem')
+        const listaUsuarios = document.querySelector('#listaUsuario')
+
+        httpRequest('./src/listarUsuarios.php', null, 'GET')
+            .then(response => {
+                if (response.codigo === 1) {
+                    listaUsuarios.innerHTML = tabelaTemplate(response.usuarios)
+                }
+            })
+
+        form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+
+            const senha = this.usuarioSenha.value
+            const repetirSenha = this.usuarioRepetirSenha.value
+
+            if (senha !== repetirSenha) {
+                alert.innerHTML = retornaAlerta('danger', 'Campos Senha e Repetir Senha devem ser iguais')
+                return
+            } else {
+                alert.innerHTML = retornaAlerta('info', 'Enviando informações')
+
+                const formData = new FormData()
+                formData.append('nome', this.usuarioNome.value)
+                formData.append('email', this.usuarioEmail.value)
+                formData.append('dataNascimento', this.usuarioNascimento.value)
+                formData.append('estado', this.usuarioEstado.value)
+                formData.append('cidade', this.usuarioCidade.value)
+                formData.append('rua', this.usuarioEndereco.value)
+                formData.append('senha', senha)
+
+                httpRequest('./src/criarUsuario.php', formData, 'POST')
+                    .then(response => {
+                        if (response.codigo === 1) {
+                            return httpRequest('./src/listarUsuarios.php', null, 'GET')
+                        } else {
+                            throw new Error()
+                        }
+                    })
+                    .then(response => {
+                        if (response.codigo === 1) {
+                            alert.innerHTML = retornaAlerta('success', 'Usuário criado com sucesso')
+                            listaUsuarios.innerHTML = tabelaTemplate(response.usuarios)
+                        } else {
+                            throw new Error()
+                        }
+                    })
+                    .catch(() => alert.innerHTML = retornaAlerta('danger', 'Erro ao criar usuário. Algum campo está faltando'))
+            }
+        })
+
+        const tabelaTemplate = (lista) => {
+            console.log(lista)
+            return lista.map(usuario => {
+                return `                    
+                    <tr>
+                        <th scope="row">${usuario.userId}</th>
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.email}</td>
+                        <td>${usuario.senha.split('').map(c => '&#9679').join('')}</td>
+                        <td>${usuario.rua}</td>
+                        <td>${usuario.estado}</td>
+                        <td>${usuario.cidade}</td>
+                        <td>${new Date(usuario.dataNascimento).toLocaleDateString()}</td>
+                    </tr>
+                `
+            }).join('')
+        }
+    </script>
+</body>
+</html>

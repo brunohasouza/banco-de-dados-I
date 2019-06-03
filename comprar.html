@@ -1,0 +1,224 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vitrine Literária</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Vitrine Literária</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Usuário</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="livro.html">Livro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="anuncio.html">Anúncio</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="comprar.html">Compra <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Criar Compra
+                        </div>
+                        <form action="" id="formCompra">
+                            <div class="card-body paddingBottom">
+                                <div class="row">
+                                    <div class="col-12" id="mensagem">
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ID do Anúncio</span>
+                                            </div>
+                                            <input name="compraAnuncio" required type="text" class="form-control" placeholder="XXXXXX">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ID do Comprador</span>
+                                            </div>
+                                            <input name="compraComprador" required type="text" class="form-control" placeholder="XXXXXX">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Tipo</span>
+                                            </div>
+                                            <select name="compraTipo" class="form-control">
+                                                <option value="0" selected>Boleto</option>
+                                                <option value="1">Cartão de Crédito</option>
+                                            </select>
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Status</span>
+                                            </div>
+                                            <select name="compraStatus" class="form-control">
+                                                <option value="0" selected>AGUARDANDO PAGAMENTO</option>
+                                                <option value="1">CONCLUÍDO</option>
+                                                <option value="2">ENTREGA EM ANDAMENTO</option>
+                                                <option value="3">CANCELADO</option>
+                                                <option value="4">EM ANÁLISE</option>
+                                            </select>
+                                        </div>         
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-info">Criar Compra</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Listar Compras
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">AnuncioId</th>
+                                        <th scope="col">CompradorId</th>
+                                        <th scope="col">Forma de Pagamento</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Data de Compra</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaCompras">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+    
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./lib/jquery.mask.min.js"></script>
+    <script src="./js/script.js"></script>
+
+    <script>
+        const form = document.querySelector('#formCompra')
+        const alert = document.querySelector('#mensagem')
+        const listaCompras = document.querySelector('#listaCompras')
+
+        httpRequest('./src/listarCompras.php', null, 'GET')
+            .then(response => {
+                if (response.codigo === 1){
+                    listaCompras.innerHTML = tabelaTemplate(response.compras)
+                }
+            })
+
+        form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+            alert.innerHTML = retornaAlerta('info', 'Enviando informações')
+
+            const formData = criarFormData([
+                { campo: 'anuncioId', dado: this.compraAnuncio.value },
+                { campo: 'userId', dado: this.compraComprador.value },
+                { campo: 'tipo', dado: this.compraTipo.value },
+                { campo: 'dataCompra', dado: `${new Date().getFullYear}-${new Date().getMonth + 1}-${new Date().getDate()}` },
+                { campo: 'status', dado: this.compraStatus.value }
+            ])
+
+            httpRequest('./src/criarCompra.php', formData, 'POST')
+                .then(response => {
+                    const { codigo } = response
+
+                    if (codigo === 1) {
+                        return httpRequest('./src/listarCompras.php', null, 'GET')
+                    } else if (codigo === 2) {
+                        throw new Error('ANUNCIO')
+                    } else if (codigo === 3) {
+                        throw new Error('COMPRADOR')
+                    } else {
+                        throw new Error('')
+                    }
+                })
+                .then(response => {
+                    if (response.codigo === 1) {
+                        alert.innerHTML = retornaAlerta('success', 'Anúncio criado com sucesso')
+                        listaCompras.innerHTML = tabelaTemplate(response.compras)
+                    } else {
+                        throw new Error('')
+                    }
+                })
+                .catch(e => {
+                    let msg = ''
+
+                    if (e.message === 'ANUNCIO') {
+                        msg = 'O anúncio adicionado não existe'
+                    } else if (e.message === 'COMPRADOR') {
+                        msg = 'O comprador adicionado não existe'
+                    } else {
+                        msg = 'Erro ao criar anúncio. Algum campo estã faltando.'
+                    }
+                    
+                    alert.innerHTML = retornaAlerta('danger', msg)
+                })
+        })
+
+        const tabelaTemplate = (lista) => {
+            const tipos = {
+                0: 'Boleto',
+                1: 'Cartão de Crédito'
+            }
+
+            const status = {
+                0: 'AGUARDANDO PAGAMENTO',
+                1: 'CONCLUÍDO',
+                2: 'ENTREGA EM ANDAMENTO',
+                3: 'CANCELADO',
+                4: 'EM ANÁLISE'
+            }
+
+            return lista.map(elemento => {
+                return `                    
+                    <tr>
+                        <th scope="row">${elemento.pedidoId}</th>
+                        <td>${elemento.anuncioId}</td>
+                        <td>${elemento.userId}</td>
+                        <td>${tipos[elemento.tipo]}</td>
+                        <td>${status[elemento.status]}</td>
+                        <td>${new Date(elemento.dataCompra).toLocaleDateString()}</td>
+                    </tr>
+                `
+            }).join('')
+        }    
+    </script>
+</body>
+</html>

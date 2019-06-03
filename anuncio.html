@@ -1,0 +1,235 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vitrine Literária</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Vitrine Literária</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Usuário</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="livro.html">Livro</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="anuncio.html">Anúncio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comprar.html">Compra</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Criar Anúncio
+                        </div>
+                        <form action="" id="formAnuncio">
+                            <div class="card-body paddingBottom">
+                                <div class="row">
+                                    <div class="col-12" id="mensagem">
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ID do Livro</span>
+                                            </div>
+                                            <input name="anuncioLivro" required type="text" class="form-control" placeholder="XXXXXX">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">ID do Vendedor</span>
+                                            </div>
+                                            <input name="anuncioVendedor" required type="text" class="form-control" placeholder="XXXXXX">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Condição do Livro</span>
+                                            </div>
+                                            <select name="anuncioCondicao" class="form-control">
+                                                <option value="0" selected>Novo</option>
+                                                <option value="1">Seminovo</option>
+                                                <option value="2">Usado</option>
+                                                <option value="3">Muito Usado</option>
+                                            </select>
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Valor em R$</span>
+                                            </div>
+                                            <input name="anuncioValor" required type="text" class="form-control" placeholder="45.00">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descrição</span>
+                                            </div>
+                                            <textarea name="anuncioDescricao" class="form-control" required placeholder="Adicione aqui sua descrição"></textarea>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-info">Criar Livro</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Listar Anúncios
+                        </div>
+                        <div class="card-body">
+                            <div class="sinopse">
+
+                            </div>
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">LivroId</th>
+                                        <th scope="col">VendedorId</th>
+                                        <th scope="col">Condição</th>
+                                        <th scope="col">Preço</th>
+                                        <th scope="col">Data de Criação</th>
+                                        <th scope="col">Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaAnuncios">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./lib/jquery.mask.min.js"></script>
+    <script src="./js/script.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('input[name=anuncioValor]').mask("#.##0.00", {reverse: true});
+        });
+
+        const form = document.querySelector('#formAnuncio')
+        const alert = document.querySelector('#mensagem')
+        const listaAnuncios = document.querySelector('#listaAnuncios')
+
+        httpRequest('./src/listarAnuncios.php', null, 'GET')
+            .then(response =>{
+                if (response.codigo === 1) {
+                    listaAnuncios.innerHTML = tabelaTemplate(response.anuncios)
+                }
+            })
+
+        form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+            alert.innerHTML = retornaAlerta('info', 'Enviando informações')
+
+            const formData = criarFormData([
+                { campo: 'livroId', dado: this.anuncioLivro.value },
+                { campo: 'userId', dado: this.anuncioVendedor.value },
+                { campo: 'valor', dado: parseFloat(this.anuncioValor.value) },
+                { campo: 'descricao', dado: this.anuncioDescricao.value },
+                { campo: 'dataCriacao', dado: `${new Date().getFullYear}-${new Date().getMonth + 1}-${new Date().getDate()}` },
+                { campo: 'condicao', dado: this.anuncioCondicao.value }
+            ])
+
+            httpRequest('./src/adicionarAnuncio.php', formData, 'POST')
+                .then(response => {
+                    const { codigo } = response
+                    if(codigo === 1) {
+                        return httpRequest('./src/listarAnuncios.php', null, 'GET')
+                    } else if (codigo === 2) {
+                        throw new Error('LIVRO')
+                    } else if (codigo === 3) {
+                        throw new Error('VENDEDOR')
+                    } else {
+                        throw new Error('')
+                    }
+                })
+                .then(response => {
+                    if (response.codigo === 1) {
+                        alert.innerHTML = retornaAlerta('success', 'Anúncio criado com sucesso')
+                        listaAnuncios.innerHTML = tabelaTemplate(response.anuncios)
+                    } else {
+                        throw new Error('')
+                    }
+                })
+                .catch(e =>  {
+                    let msg = ''
+
+                    if (e.message === 'LIVRO') {
+                        msg = 'O livro adicionado não existe'
+                    } else if (e.message === 'VENDEDOR') {
+                        msg = 'O vendedor adicionado não existe'
+                    } else {
+                        msg = 'Erro ao criar anúncio. Algum campo estã faltando.'
+                    }
+
+                    alert.innerHTML = retornaAlerta('danger', msg)
+                })
+        })
+
+        const mostrarSinopse = (texto) => {
+            document.querySelector('.sinopse').innerHTML = `<div class="alert alert-secondary" role="alert">${texto}</div>`
+        }
+
+        const tabelaTemplate = (lista) => {
+            const condicoes = {
+                0: 'Novo',
+                1: 'Seminovo',
+                2: 'Usado',
+                3: 'Muito Usado'
+            }
+
+            return lista.map(elemento => {
+                return `                    
+                    <tr>
+                        <th scope="row">${elemento.anuncioId}</th>
+                        <td>${elemento.livroId}</td>
+                        <td>${elemento.userId}</td>
+                        <td>${condicoes[elemento.condicao]}</td>
+                        <td>R$${elemento.valor}</td>
+                        <td>${new Date(elemento.dataCriacao).toLocaleDateString()}</td>
+                        <td><button class="btn btn-secondary" onclick="mostrarSinopse('${elemento.descricao}')">Ver Descrição</button></td>
+                    </tr>
+                `
+            }).join('')
+        }    
+    </script>
+    
+</body>
+</html>

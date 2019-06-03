@@ -1,0 +1,214 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vitrine Literária</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="index.html">Vitrine Literária</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Usuário</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="livro.html">Livro <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="anuncio.html">Anúncio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="comprar.html">Compra</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Adicionar Livro
+                        </div>
+                        <form action="" id="formLivros">
+                            <div class="card-body paddingBottom">
+                                <div class="row">
+                                    <div class="col-12" id="mensagem">
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Título</span>
+                                            </div>
+                                            <input name="livroNome" required type="text" class="form-control" placeholder="A Revolução dos Bichos">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Autor</span>
+                                            </div>
+                                            <input name="livroAutor" required type="text" class="form-control" placeholder="George Orwell">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Ano</span>
+                                            </div>
+                                            <input name="livroAno" required type="text" class="form-control" placeholder="2007">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Páginas</span>
+                                            </div>
+                                            <input name="livroPaginas" required type="text" class="form-control" placeholder="152">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Editora</span>
+                                            </div>
+                                            <input name="livroEditora" required type="text" class="form-control" placeholder="Companhia das Letras">
+                                        </div>                                         
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Sinopse</span>
+                                            </div>
+                                            <textarea name="livroSinopse" class="form-control" required placeholder="Adicione aqui uma sinopse do livro"></textarea>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-info">Criar Livro</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Listar Livros
+                        </div>
+                        <div class="card-body">
+                            <div class="sinopse">
+
+                            </div>
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Título</th>
+                                        <th scope="col">Autor</th>
+                                        <th scope="col">Ano</th>
+                                        <th scope="col">Páginas</th>
+                                        <th scope="col">Editora</th>
+                                        <th scope="col">Sinopse</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaLivros">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+    
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./lib/jquery.mask.min.js"></script>
+    <script src="./js/script.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('input[name=livroAno]').mask('9999');
+            $('input[name=livroPaginas]').mask('9999');
+        });
+
+        const form = document.querySelector('#formLivros')
+        const alert = document.querySelector('#mensagem')
+        const listaLivros = document.querySelector('#listaLivros')
+
+        httpRequest('./src/listarLivros.php', null, 'GET')
+            .then(response => {                
+                if (response.codigo === 1) {
+                    listaLivros.innerHTML = tabelaTemplate(response.livros)
+                }
+            })
+
+        form.addEventListener('submit', function(ev){
+            ev.preventDefault();
+            alert.innerHTML = retornaAlerta('info', 'Enviando informações')
+
+            const formData = criarFormData([
+                { campo: 'titulo', dado: this.livroNome.value },
+                { campo: 'autor', dado: this.livroAutor.value },
+                { campo: 'ano', dado: parseInt(this.livroAno.value) },
+                { campo: 'paginas', dado: parseInt(this.livroPaginas.value) },
+                { campo: 'editora', dado: this.livroEditora.value },
+                { campo: 'sinopse', dado: this.livroSinopse.value }
+            ])
+
+            httpRequest('./src/adicionarLivro.php', formData, 'POST')
+                .then(response => {
+                    if (response.codigo === 1) {
+                        return httpRequest('./src/listarLivros.php', null, 'GET')
+                    } else {
+                        throw new Error()
+                    }
+                })
+                .then(response => {
+                    if (response.codigo === 1) {
+                        alert.innerHTML = retornaAlerta('success', 'Livro criado com sucesso')
+                        listaLivros.innerHTML = tabelaTemplate(response.livros)
+                    } else {
+                        throw new Error()
+                    }
+                })
+                .catch(() => alert.innerHTML = retornaAlerta('danger', 'Erro ao criar livro. Algum campo está faltando'))
+        })
+
+        const mostrarSinopse = (texto) => {
+            document.querySelector('.sinopse').innerHTML = `<div class="alert alert-secondary" role="alert">${texto}</div>`
+        }
+
+        const tabelaTemplate = (lista) => {
+            return lista.map(elemento => {
+                return `                    
+                    <tr>
+                        <th scope="row">${elemento.livroId}</th>
+                        <td>${elemento.titulo}</td>
+                        <td>${elemento.autor}</td>
+                        <td>${elemento.ano}</td>
+                        <td>${elemento.paginas}</td>
+                        <td>${elemento.editora}</td>
+                        <td><button class="btn btn-secondary" onclick="mostrarSinopse('${elemento.sinopse}')">Ver Sinopse</button></td>
+                    </tr>
+                `
+            }).join('')
+        }
+    </script>
+</body>
+</html>
