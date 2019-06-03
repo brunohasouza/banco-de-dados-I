@@ -8,10 +8,6 @@ mydb = mysql.connector.connect(
   passwd=""
 )
 
-try:
-    mycursor = mydb.cursor()
-    executeScriptsFromFile('./biblio.sql', mycursor)
-    mydb.commit()
-    print json.dumps({ 'codigo': 1 })
-except:
-    print json.dumps({ 'codigo': 0 })
+mycursor = mydb.cursor()
+executeScriptsFromFile('./biblio.sql', mycursor)
+mydb.commit()
